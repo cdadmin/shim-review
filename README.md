@@ -18,7 +18,7 @@ Here's the template:
 -------------------------------------------------------------------------------
 What organization or people are asking to have this signed:
 -------------------------------------------------------------------------------
-Magaeric Solutions LLC
+Magaeric Solutions LLC - The developer of CloneDeploy
 
 -------------------------------------------------------------------------------
 What product or service is this for:
@@ -50,32 +50,34 @@ Who is the secondary contact for security updates, etc.
 -------------------------------------------------------------------------------
 What upstream shim tag is this starting from:
 -------------------------------------------------------------------------------
-[https://github.com/rhboot/shim/tree/da6284569c4b5d60d14e6187f696f54cccb7b3d2]
+https://github.com/rhboot/shim/tree/da6284569c4b5d60d14e6187f696f54cccb7b3d2
 
 -------------------------------------------------------------------------------
 URL for a repo that contains the exact code which was built to get this binary:
 -------------------------------------------------------------------------------
-[https://github.com/cdadmin/shim-review/shim-da6284569c4b5d60d14e6187f696f54cccb7b3d2]
+https://github.com/cdadmin/shim-review/tree/master/shim-da6284569c4b5d60d14e6187f696f54cccb7b3d2
 
 -------------------------------------------------------------------------------
 What patches are being applied and why:
 -------------------------------------------------------------------------------
-[No patches, other than fixing a missing closing brace in mok.c as described in issue 168.  ]
+No patches, other than fixing a missing closing brace in mok.c as described in issue 168.  
 
 -------------------------------------------------------------------------------
 What OS and toolchain must we use to reproduce this build?  Include where to find it, etc.  We're going to try to reproduce your build as close as possible to verify that it's really a build of the source tree you tell us it is, so these need to be fairly thorough. At the very least include the specific versions of gcc, binutils, and gnu-efi which were used, and where to find those binaries.
 -------------------------------------------------------------------------------
-[Ubuntu 18.04.1 LTS binutils 2.30-20ubuntu2 gcc 4:7.3.0-3ubuntu2 gnu-efi 3.0.9-1]
+Ubuntu 18.04.1 LTS 
+binutils 2.30-20ubuntu2 
+gcc 4:7.3.0-3ubuntu2 
+gnu-efi 3.0.9-1 from https://packages.ubuntu.com/en/disco/amd64/gnu-efi/download
 
-gnu-efi 3.0.9-1 was used from https://packages.ubuntu.com/en/disco/amd64/gnu-efi/download
 
 
 -------------------------------------------------------------------------------
 Which files in this repo are the logs for your build?   This should include logs for creating the buildroots, applying patches, doing the build, creating the archives, etc.
 -------------------------------------------------------------------------------
-[shim_build.log]
+https://github.com/cdadmin/shim-review/blob/master/shim_build.log
 
 -------------------------------------------------------------------------------
 Add any additional information you think we may need to validate this shim
 -------------------------------------------------------------------------------
-[your text here]
+
