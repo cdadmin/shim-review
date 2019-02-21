@@ -1,0 +1,132 @@
+diff -ruN a/grub-core/net/bootp.c b/grub-core/net/bootp.c
+--- a/grub-core/net/bootp.c	2019-02-21 09:47:57.985910592 -0500
++++ b/grub-core/net/bootp.c	2019-02-21 08:56:25.850503577 -0500
+@@ -227,6 +227,41 @@
+ 
+ #define OFFSET_OF(x, y) ((grub_size_t)((grub_uint8_t *)((y)->x) - (grub_uint8_t *)(y)))
+ 
++void grub_net_merge_dhcp_ack (struct grub_net_bootp_packet *target,
++                              struct grub_net_bootp_packet *source)
++{
++  if (source->opcode)
++    target->opcode = source->opcode;
++  if (source->hw_type)
++    target->hw_type = source->hw_type;
++  if (source->hw_len)
++    target->hw_len = source->hw_len;
++  if (source->gate_hops)
++    target->gate_hops = source->gate_hops;
++  if (source->ident)
++    target->ident = source->ident;
++  if (source->seconds)
++    target->seconds = source->seconds;
++  if (source->flags)
++    target->flags = source->flags;
++  if (source->client_ip)
++    target->client_ip = source->client_ip;
++  if (source->your_ip)
++    target->your_ip = source->your_ip;
++  if (source->server_ip)
++    target->server_ip = source->server_ip;
++  if (source->gateway_ip)
++    target->gateway_ip = source->gateway_ip;
++  if (source->mac_addr)
++    grub_memcpy (&target->mac_addr, &source->mac_addr, 6);
++  if (source->server_name[0])
++    grub_memcpy (&target->server_name, &source->server_name, 64);
++  if (source->boot_file[0])
++    grub_memcpy (&target->boot_file, &source->boot_file, 128);
++  if (source->vendor[0])
++    grub_memcpy (&target->vendor, &source->vendor, 60);
++}
++
+ struct grub_net_network_level_interface *
+ grub_net_configure_by_dhcp_ack (const char *name,
+ 				struct grub_net_card *card,
+diff -ruN a/grub-core/net/drivers/efi/efinet.c b/grub-core/net/drivers/efi/efinet.c
+--- a/grub-core/net/drivers/efi/efinet.c	2019-02-21 09:47:58.009910588 -0500
++++ b/grub-core/net/drivers/efi/efinet.c	2019-02-21 09:02:43.958422952 -0500
+@@ -709,7 +709,7 @@
+ {
+   struct grub_net_card *card;
+   grub_efi_device_path_t *dp;
+-
++  struct grub_net_bootp_packet *combined_bootp = NULL;
+   dp = grub_efi_get_device_path (hnd);
+   if (! dp)
+     return;
+@@ -800,6 +800,14 @@
+       }
+     else
+       {
++	if (pxe_mode->proxy_offer_received)
++	{
++	  combined_bootp = grub_zalloc (sizeof (*combined_bootp));
++          grub_net_merge_dhcp_ack (combined_bootp, (struct grub_net_bootp_packet *) pxe_mode->proxy_offer);
++          grub_net_merge_dhcp_ack (combined_bootp, (struct grub_net_bootp_packet *) pxe_mode->dhcp_ack);
++          grub_net_configure_by_dhcp_ack (card->name, card, 0,combined_bootp,sizeof (combined_bootp),1, device, path);
++        }
++	else
+ 	grub_net_configure_by_dhcp_ack (card->name, card, 0,
+ 					(struct grub_net_bootp_packet *)
+ 					packet_buf,
+diff -ruN a/include/grub/efi/api.h b/include/grub/efi/api.h
+--- a/include/grub/efi/api.h	2019-02-21 09:47:58.009910588 -0500
++++ b/include/grub/efi/api.h	2019-02-21 09:51:04.401876901 -0500
+@@ -585,7 +585,7 @@
+ typedef grub_uint8_t grub_efi_mac_address_t[32];
+ typedef grub_uint8_t grub_efi_ipv4_address_t[4];
+ typedef grub_uint16_t grub_efi_ipv6_address_t[8];
+-typedef grub_uint8_t grub_efi_ip_address_t[8] __attribute__ ((aligned(4)));
++typedef grub_uint8_t grub_efi_ip_address_t[16] __attribute__ ((aligned(4)));
+ typedef grub_efi_uint64_t grub_efi_physical_address_t;
+ typedef grub_efi_uint64_t grub_efi_virtual_address_t;
+ 
+@@ -1520,9 +1520,23 @@
+   grub_uint8_t ipv6_available;
+   grub_uint8_t ipv6_supported;
+   grub_uint8_t using_ipv6;
+-  grub_uint8_t unused[16];
+-  grub_efi_pxe_ip_address_t station_ip;
+-  grub_efi_pxe_ip_address_t subnet_mask;
++  grub_uint8_t bis_supported;
++  grub_uint8_t bis_detected;
++  grub_uint8_t auto_arp;
++  grub_uint8_t send_guid;
++  grub_uint8_t dhcp_discover_valid;
++  grub_uint8_t dhcp_ack_received;
++  grub_uint8_t proxy_offer_received;
++  grub_uint8_t pxe_discover_valid;
++  grub_uint8_t pxe_reply_received;
++  grub_uint8_t pxe_bis_reply_received;
++  grub_uint8_t icmp_error_received;
++  grub_uint8_t tftp_error_received;
++  grub_uint8_t make_callbacks;
++  grub_uint8_t ttl;
++  grub_uint8_t tos;
++  grub_efi_ip_address_t station_ip;
++  grub_efi_ip_address_t subnet_mask;
+   grub_efi_pxe_packet_t dhcp_discover;
+   grub_efi_pxe_packet_t dhcp_ack;
+   grub_efi_pxe_packet_t proxy_offer;
+diff -ruN a/include/grub/net.h b/include/grub/net.h
+--- a/include/grub/net.h	2019-02-21 09:47:57.985910592 -0500
++++ b/include/grub/net.h	2019-02-21 09:10:53.602315653 -0500
+@@ -439,7 +439,7 @@
+   grub_net_bootp_mac_addr_t mac_addr;
+   char server_name[64];
+   char boot_file[128];
+-  grub_uint8_t vendor[0];
++  grub_uint8_t vendor[60];
+ } GRUB_PACKED;
+ 
+ struct grub_net_dhcp6_packet
+@@ -521,6 +521,8 @@
+     GRUB_NET_BOOTP_END = 0xff
+   };
+ 
++void grub_net_merge_dhcp_ack (struct grub_net_bootp_packet *target,struct grub_net_bootp_packet *source);
++
+ struct grub_net_network_level_interface *
+ grub_net_configure_by_dhcp_ack (const char *name,
+ 				struct grub_net_card *card,
