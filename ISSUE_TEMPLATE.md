@@ -2,18 +2,18 @@ Make sure you have provided the following information:
 
  - [x] link to your code branch cloned from rhboot/shim-review in the form user/repo@tag
  - [x] completed README.md file with the necessary information
-       https://github.com/cdadmin/shim-review/blob/master/README.md
+      https://github.com/cdadmin/shim-review/tree/magaericsolutions-shim-x64-20200130/README.md
  - [x] shim.efi to be signed
-       https://github.com/cdadmin/shim-review/blob/master/shimx64.efi
+https://github.com/cdadmin/shim-review/tree/magaericsolutions-shim-x64-20200130/shimx64.efi
  - [x] public portion of your certificate embedded in shim (the file passed to VENDOR_CERT_FILE)
-       https://github.com/cdadmin/shim-review/blob/master/magaericsolutions-ca.cer
+       https://github.com/cdadmin/shim-review/tree/magaericsolutions-shim-x64-20200130/magaericsolutions-ca.cer
  - [x] any extra patches to shim via your own git tree or as files
        No additional patches
  - [x] any extra patches to grub via your own git tree or as files
        Add proxy pxe support to grub2
-       https://github.com/cdadmin/shim-review/blob/master/grub-2.02/patches/add_pxe_efi_proxy.patch
+       https://github.com/cdadmin/shim-review/tree/magaericsolutions-shim-x64-20200130/grub-2.02/patches/add_pxe_efi_proxy.patch
  - [x] build logs
-       https://github.com/cdadmin/shim-review/blob/master/shim_build.log
+       https://github.com/cdadmin/shim-review/tree/magaericsolutions-shim-x64-20200130/shim_build.log
 
 
 ###### What organization or people are asking to have this signed:

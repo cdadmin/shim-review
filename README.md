@@ -78,7 +78,7 @@ Use the provided Dockerfile.
 -------------------------------------------------------------------------------
 Which files in this repo are the logs for your build?   This should include logs for creating the buildroots, applying patches, doing the build, creating the archives, etc.
 -------------------------------------------------------------------------------
-https://github.com/cdadmin/shim-review/blob/master/shim_build.log
+https://github.com/cdadmin/shim-review/tree/magaericsolutions-shim-x64-20200130/shim_build.log
 
 -------------------------------------------------------------------------------
 Add any additional information you think we may need to validate this shim
