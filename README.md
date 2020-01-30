@@ -36,7 +36,7 @@ Who is the primary contact for security updates, etc.
 -------------------------------------------------------------------------------
 - Name: Jon Dolny
 - Position: Developer
-- Email address: support@clonedeploy.org
+- Email address: jddolny@outlook.com
 - PGP key, signed by the other security contacts, and preferably also with signatures that are reasonably well known in the linux community:
 
 -------------------------------------------------------------------------------
@@ -50,25 +50,28 @@ Who is the secondary contact for security updates, etc.
 -------------------------------------------------------------------------------
 What upstream shim tag is this starting from:
 -------------------------------------------------------------------------------
-https://github.com/rhboot/shim/tree/da6284569c4b5d60d14e6187f696f54cccb7b3d2
+https://github.com/rhboot/shim/tree/a4a1fbe728c9545fc5647129df0cf1593b953bec
 
 -------------------------------------------------------------------------------
 URL for a repo that contains the exact code which was built to get this binary:
 -------------------------------------------------------------------------------
-https://github.com/cdadmin/shim-review/tree/master/shim-da6284569c4b5d60d14e6187f696f54cccb7b3d2
+https://github.com/rhboot/shim/tree/a4a1fbe728c9545fc5647129df0cf1593b953bec
 
 -------------------------------------------------------------------------------
 What patches are being applied and why:
 -------------------------------------------------------------------------------
-No patches, other than fixing a missing closing brace in mok.c as described in issue 168.  
+No patches.
 
 -------------------------------------------------------------------------------
 What OS and toolchain must we use to reproduce this build?  Include where to find it, etc.  We're going to try to reproduce your build as close as possible to verify that it's really a build of the source tree you tell us it is, so these need to be fairly thorough. At the very least include the specific versions of gcc, binutils, and gnu-efi which were used, and where to find those binaries.
 -------------------------------------------------------------------------------
-Ubuntu 18.04.1 LTS 
-binutils 2.30-20ubuntu2 
-gcc 4:7.3.0-3ubuntu2 
-gnu-efi 3.0.9-1 from https://packages.ubuntu.com/en/disco/amd64/gnu-efi/download
+Ubuntu 19.04  
+binutils 2.32-7ubuntu4   
+gcc 9.1.0-2ubuntu2~19.04
+gnu-efi 3.0.9-1
+
+To build:
+Use the provided Dockerfile.
 
 
 
