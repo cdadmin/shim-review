@@ -84,3 +84,4 @@ linuxefi_truncate_overlong_relocs.patch
 quick-boot-lvm.patch
 mkconfig_leave_breadcrumbs.patch
 linuxefi_disable_sb_fallback.patch
+add_pxe_efi_proxy.patch
