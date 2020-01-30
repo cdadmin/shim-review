@@ -6,7 +6,7 @@ Make sure you have provided the following information:
  - [x] shim.efi to be signed
        https://github.com/cdadmin/shim-review/blob/master/shimx64.efi
  - [x] public portion of your certificate embedded in shim (the file passed to VENDOR_CERT_FILE)
-       https://github.com/cdadmin/shim-review/blob/master/shim-da6284569c4b5d60d14e6187f696f54cccb7b3d2/clonedeploy-uefi-ca.cer
+       https://github.com/cdadmin/shim-review/blob/master/magaericsolutions-ca.cer
  - [x] any extra patches to shim via your own git tree or as files
        No additional patches
  - [x] any extra patches to grub via your own git tree or as files
@@ -23,7 +23,7 @@ Magaeric Solutions LLC - The developer of CloneDeploy
 CloneDeploy - An OS cloning and deployment solution for various versions of Linux and Windows. http://clonedeploy.org
 
 ###### What is the origin and full version number of your shim?
-Shim-15 up to and including da62845
+Shim-15 up to and including a4a1fbe
 
 ###### What's the justification that this really does need to be signed for the whole world to be able to boot it:
 Organizations may be deploying an image to 100's or 1000's of machines. It is inefficient and insecure to be disabling Secure Boot in order to image those machines.
@@ -57,4 +57,4 @@ Vanilla Linux 4.20.10 with lockdown patch
 This is the first submission
 
 ###### What is the hash of your final SHIM binary?
-615d86d60cd3ed11e97007659940eeea21f42ab9caf4569b70a0a7b11de2bb15  shimx64.efi
+76144f058c2a7586eaabb74125dab2360a3c2171afb0a27390d76e5476517763  shimx64.efi
